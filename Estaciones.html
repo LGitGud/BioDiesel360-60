@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioDise-Estacionesl</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="Img/logo.jpg" alt="logo_BioDiesel">
+            <h2 class="nom-empresa">BioDiesel360-60 
+                <span>ADMINISTRADOR</span></h2>
+        </a>
+        <nav>
+            <a href="/Estaciones.html" class="nav-lin">Consulta Estaciones</a>
+            <a href="Diesel.html" class="nav-lin">Consulta Diésel</a>
+        </nav>
+    </header>
+    <section>
+        <div id="texto">
+    	    <h1>Estaciones de BioDiesel360-60</h1>
+		    <br>       
+        </div>
+        <table id="datos" border="1" align="center"></table>
+        <script>
+            window.onload=function(){
+                cargarXML();
+            }
+			function cargarXML(){
+				var xmlhttp=new XMLHttpRequest();
+				xmlhttp.onreadystatechange=function(){
+					if(this.readyState==4 && this.status==200){
+						mostrarArchivo(this);						
+						}						
+					};
+					xmlhttp.open("GET","Estaciones.xml",true);
+					xmlhttp.send();
+				}							
+				function mostrarArchivo(xml){
+					var x,i,docXML,tabla;
+					docXML=xml.responseXML;
+                    tabla="<tr><th>ID DE ESTACIÓN</th><th>NOMBDE DE ESTACIÓN</th><th>DOMICILIO</th><th>E-MAIL</th><th>PRODUCTOS</th><th>CONTACTO</th><th>TELÉFONO</th></tr>";					
+					x=docXML.getElementsByTagName("ubicacion");
+					for(i=0; i<x.length; i++){
+						tabla+="<tr><td>";
+                        tabla+=x[i].getElementsByTagName("id")[0].textContent;
+                        tabla+="</td><td>";
+                        tabla+=x[i].getElementsByTagName("estacion")[0].textContent;    
+                        tabla+="</td><td>";
+                        tabla+=x[i].getElementsByTagName("domicilio")[0].textContent;
+                        tabla+="</td><td>";
+                        tabla+=x[i].getElementsByTagName("correo")[0].textContent;
+                        tabla+="</td><td>";
+                        tabla+=x[i].getElementsByTagName("productos")[0].textContent;
+                        tabla+="</td><td>";
+                        tabla+=x[i].getElementsByTagName("contacto")[0].textContent;
+                        tabla+="</td><td>";
+                        tabla+=x[i].getElementsByTagName("telefono")[0].textContent;
+                        tabla+="</td></tr>";    
+			}
+			document.getElementById("datos").innerHTML=tabla;
+		}
+                
+	</script>  
+    </section>
+    <footer>
+        <p class="textfoot">
+            Rio Culiacán sin númer | Tel. 4428952834 | Correo: lm6936945@gmail.com
+        </p>
+    </footer>
+</body>
+</html>
